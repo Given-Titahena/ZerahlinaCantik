@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Album Cinta Given & Zerah 💖</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:radial-gradient(circle at top,#2c003e,#0f0018);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    color:#eee;
+}
+
+/* LOVE FALL */
+.love-fall{
+    position:fixed;
+    top:-50px;
+    font-size:20px;
+    animation:fall linear infinite;
+    opacity:.8;
+}
+@keyframes fall{
+    0%{transform:translateY(0) rotate(0deg)}
+    100%{transform:translateY(110vh) rotate(360deg)}
+}
+
+/* LOCK */
+.lock{
+    background:#1c1c28;
+    padding:30px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 25px 50px rgba(0,0,0,.7);
+}
+.lock input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    margin-top:10px;
+    width:220px;
+}
+.lock button{
+    margin-top:15px;
+    padding:12px 30px;
+    border-radius:25px;
+    border:none;
+    background:linear-gradient(135deg,#ff5fa2,#ff9ad5);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* BOOK */
+.book{
+    width:360px;
+    height:520px;
+    perspective:3500px;
+    position:relative;
+    display:none;
+}
+
+.page{
+    width:100%;
+    height:100%;
+    position:absolute;
+    background:#1c1c28;
+    border-radius:18px;
+    box-shadow:0 25px 50px rgba(0,0,0,.7);
+    transform-origin:left;
+    transition:transform 1.2s ease;
+    backface-visibility:hidden;
+    overflow:hidden;
+}
+
+.page img{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    border-radius:18px 18px 0 0;
+}
+
+.cover{
+    background:linear-gradient(135deg,#3a003f,#8e2de2);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.page.flipped{transform:rotateY(-180deg)}
+
+.content{
+    padding:16px;
+    text-align:center;
+}
+
+h1,h2{color:#ff5fa2}
+p{font-size:14px;line-height:1.6}
+
+/* BUTTON */
+.book button{
+    position:absolute;
+    bottom:-70px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:14px 36px;
+    border-radius:35px;
+    border:none;
+    background:linear-gradient(270deg,#ff5fa2,#ff9ad5,#c77dff);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+    0%{transform:translateX(-50%) scale(1)}
+    50%{transform:translateX(-50%) scale(1.1)}
+    100%{transform:translateX(-50%) scale(1)}
+}
+
+/* FINAL SURPRISE */
+#finalSurprise{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle,rgba(0,0,0,.7),#0f0018);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+#finalButton{
+    padding:18px 45px;
+    border-radius:40px;
+    border:none;
+    background:linear-gradient(135deg,#ff5fa2,#c77dff);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    animation:bounce 1.4s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-18px)}
+}
+
+canvas{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+/* FINAL TEXT */
+#finalText{
+    position:absolute;
+    top:65%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(.6);
+    font-size:28px;
+    font-weight:bold;
+    color:#ff9ad5;
+    text-shadow:0 0 10px #ff5fa2,0 0 30px #c77dff;
+    opacity:0;
+}
+.showFinalText{
+    animation:fadeBounce 2s ease forwards;
+}
+@keyframes fadeBounce{
+    0%{opacity:0;transform:translate(-50%,-40%) scale(.5)}
+    60%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+    100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+
+@media(max-width:600px){
+    .book{width:90vw}
+    #finalText{font-size:20px}
+}
+</style>
+</head>
+
+<body>
+
+<script>
+for(let i=0;i<30;i++){
+    const l=document.createElement("div");
+    l.className="love-fall";
+    l.innerHTML="💖";
+    l.style.left=Math.random()*100+"vw";
+    l.style.fontSize=16+Math.random()*20+"px";
+    l.style.animationDuration=5+Math.random()*6+"s";
+    document.body.appendChild(l);
+}
+</script>
+
+<div class="lock" id="lockScreen">
+<h2>🔐 Album Cinta Rahasia</h2>
+<input type="date" id="startDateInput"><br>
+<input type="password" id="password" placeholder="Password cinta 💖"><br>
+<button onclick="unlock()">Buka Buku 📖</button>
+<p id="error"></p>
+</div>
+
+<div class="book" id="book">
+
+<div class="page cover" id="p1" style="z-index:8">
+<h1>ALBUM CINTA 💖</h1>
+<h2>Given Titahena<br>💖<br>Zerah Titaley</h2>
+<p id="daysTogether"></p>
+</div>
+
+<div class="page" id="p2" style="z-index:7">
+<img src="img/WhatsApp Image 2025-12-30 at 14.00.35.jpeg">
+<div class="content">
+<h2>Awal Cerita 💖</h2>
+<p>Di sinilah semuanya bermula, tawa kecil yang berubah menjadi cinta besar to Syngku Yang Paleng Manis Paskali.</p>
+</div>
+</div>
+
+<div class="page" id="p3" style="z-index:6">
+<img src="img/WhatsApp Image 2025-12-30 at 14.00.34.jpeg">
+<div class="content">
+<h2>Untuk Kamu 💖</h2>
+<p>Syng bukan sekadar hadir saja, tapi menjadi alasan par Beta untuk bertahan.</p>
+</div>
+</div>
+
+<div class="page" id="p4" style="z-index:5">
+<img src="img/WhatsApp Image 2025-12-30 at 14.00.34 (1).jpeg">
+<div class="content">
+<h2>Kenangan 💞</h2>
+<p>Setiap momen yang sama sama deng Syng adalah cerita yang ingin Beta ingat selamanya.</p>
+</div>
+</div>
+
+<div class="page" id="p5" style="z-index:4">
+<img src="img/WhatsApp Image 2025-12-30 at 14.00.35 (1).jpeg">
+<div class="content">
+<h2>Janji 💍</h2>
+<p>Beta berjanji, seng hanya mencintai Syng saat mudah, tapi juga saat sulit, itu Beta pung janji Syngku.</p>
+</div>
+</div>
+
+<div class="page" id="p6" style="z-index:3">
+<div class="content">
+<h2>Pesan Dari Given 💌</h2>
+<p>
+Zerah Sayang 💖<br><br>
+Dangke banyak su pilih bertahan sama sama deng Beta Syngku yang paleng Cantik.  
+Di setiap Beta pung lalah, Syng su pasti adalah tenang.  
+Di setiap Beta pung gelap, Syng su pasti adalah cahaya 🌙  
+<br><br>
+Beta Paleng Cinta Syng, hari ini, besok, dan seterusnya 💞
+</p>
+</div>
+</div>
+
+<div class="page" id="p7" style="z-index:2">
+<div class="content">
+<h2>Selamanya 🌙</h2>
+<p>
+Bukan tentang seberapa lama katong dua sama sama,  
+tapi seberapa tulus katong dua saling memilih setiap hari
+Givenlina💖Zerahlina
+</p>
+</div>
+</div>
+
+<button onclick="flip()">Balik Halaman 💖</button>
+</div>
+
+<div id="finalSurprise">
+<button id="finalButton">Klik Cinta Terakhir 💖</button>
+<canvas id="loveCanvas"></canvas>
+<div id="finalText">PALING SAYANG ZERAHLINA PASKALI</div>
+</div>
+
+<script>
+const correctPassword="09-12-2023";
+let startDate,current=1,total=7;
+
+function unlock(){
+if(password.value===correctPassword){
+startDate=new Date(startDateInput.value);
+lockScreen.style.display="none";
+book.style.display="block";
+daysTogether.innerHTML=Math.floor((new Date()-startDate)/86400000)+" hari bersama 💖";
+}else error.innerText="Password salah 💔";
+}
+
+function flip(){
+if(current<=total){
+document.getElementById("p"+current).classList.add("flipped");
+current++;
+if(current>total){
+setTimeout(()=>finalSurprise.style.display="flex",1200);
+}
+}
+}
+
+/* DRAW LOVE */
+const canvas=document.getElementById("loveCanvas");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+finalButton.onclick=()=>{
+finalButton.style.display="none";
+ctx.strokeStyle="#ff5fa2";
+ctx.lineWidth=4;
+let t=0;
+ctx.beginPath();
+function draw(){
+const x=16*Math.sin(t)**3;
+const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+ctx.lineTo(canvas.width/2+x*12,canvas.height/2-y*12);
+ctx.stroke();
+t+=0.03;
+if(t<=Math.PI*2){
+requestAnimationFrame(draw);
+}else{
+setTimeout(()=>{
+document.getElementById("finalText").classList.add("showFinalText");
+},400);
+}
+}
+draw();
+};
+</script>
+
+</body>
+</html>
